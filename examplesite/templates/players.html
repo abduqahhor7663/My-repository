@@ -1,0 +1,56 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<main>
+  <section>
+    <div class="container">
+      <div>Hozi {% now "Y" %}-yil</div>
+      <div>{% include "search_form.html" %}</div>
+      <div>{% autoescape off %} {{text}} {% endautoescape %}</div>
+      <div>
+        {% for num in numbers %} {% if num < 5 %}
+        <p>{{num}}</p>
+        {% endif %} {% endfor %}
+      </div>
+    </div>
+    <div class="container">
+      <ul class="nav">
+        {% for leaguage in leaguages %}
+        <li>
+          <img src="{{leaguage.logo.url}}" width="50" alt="" />
+          {{leaguage.name}}
+        </li>
+        {% endfor %}
+      </ul>
+      <ul class="nav">
+        {% for club in clubs %}
+        <li>
+          <img src="{{club.logo.url}}" width="50" alt="" />
+          {{club.name}}
+        </li>
+        {% endfor %}
+      </ul>
+      <ul>
+        {% for player in object_list %}
+        <li>
+          <img src="{{player.image.url}}" width="50" alt="" />
+          {{player.name}}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+  <section>
+    <div class="container">
+      <div>
+        <form
+          action="{% url 'players:add_leaguage' %}"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          {% csrf_token %} {{form}}
+          <input type="submit" value="Send" />
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock content %}
