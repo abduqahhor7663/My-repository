@@ -39,7 +39,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to='products/')
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name="brand_products")
     color = models.CharField(max_length=10, choices=COLORS)
-    rating = models.FloatField()
+    rating = models.FloatField(blank=True)
     cell_count = models.PositiveSmallIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     discount = models.PositiveSmallIntegerField(default=0)
@@ -49,6 +49,16 @@ class Product(models.Model):
     
     def __str__(self):
         return self.name
+    
+    
+    def get_discount_price(self):
+        if self.discount:
+            price = self.price - ((self.price / 100) * self.discount)
+            print(price)
+            print(self.price)
+            return price
+        else:
+            return self.price
 
 
 class Rating(models.Model):

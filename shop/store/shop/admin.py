@@ -30,18 +30,12 @@
 
 
 from django.contrib import admin
-from .models import Category, SubCategory, Brand, Product, Rating
+from .models import Category, Brand, Product, Rating
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug')
     prepopulated_fields = {'slug': ('name',)}
-
-@admin.register(SubCategory)
-class SubCategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug', 'category')
-    prepopulated_fields = {'slug': ('name',)}
-
 
 
 @admin.register(Brand)
@@ -56,8 +50,8 @@ class RatingInline(admin.TabularInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug', 'subcategory', 'price', 'brand', 'color', 'rating', 'stock', 'aviable')
-    list_filter = ('subcategory', 'brand', 'color')
+    list_display = ('name', 'slug', 'category', 'price', 'brand', 'color', 'rating', 'stock', 'aviable')
+    list_filter = ('category', 'brand', 'color')
     prepopulated_fields = {'slug': ('name',)}
     inlines = [RatingInline]
 
