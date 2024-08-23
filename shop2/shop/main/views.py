@@ -13,9 +13,12 @@ def products(request):
     brands = Brand.object.all()
     return render(request, {'cat':categories})
     
-def cartdetail(request):
     
-    return render(request,"cart.html")
+    
+def cartdetail(request):
+    product_id = request.GET.get('product_id')
+    
+    return render(request,"cart.html", {'product_id': product_id})
 
 
 class ProductDetailView(DetailView):

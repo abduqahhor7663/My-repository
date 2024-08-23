@@ -34,7 +34,7 @@ class Product(models.Model):
     name = models.CharField(max_length=250)
     slug = models.SlugField(unique=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="category_products")
-    price = models.FloatField()
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to='products/')
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name="brand_products")
@@ -49,17 +49,14 @@ class Product(models.Model):
     
     def __str__(self):
         return self.name
-    
-    
-    def get_discount_price(self):
-        if self.discount:
-            price = self.price - ((self.price / 100) * self.discount)
-            print(price)
-            print(self.price)
-            return price
-        else:
-            return self.price
 
+    def get_discount_price(self):
+        price = self.price
+        discount = self.discount
+        if discount:
+            return price - (price * discount / 100)
+        else:
+            return price
 
 class Rating(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="product_ratings")

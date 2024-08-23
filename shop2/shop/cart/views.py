@@ -6,9 +6,12 @@ from .models import Cart,CartProducts
 def cart_init(request):
     try:
         cart = Cart.objects.get(id=request.session.get('user_cart_id'))
+        print(cart)
+        return cart
     except:
         cart = Cart.objects.create() # yangi cart object hosil qilish
         request.session['user_cart_id'] = cart.id
+        print(cart)
     return cart
 
 
@@ -17,6 +20,7 @@ class CartView(View):
     
     def get(self, request):
         cart = cart_init(request)
+        print(cart)
         return render(request, "cart.html",{"cart":cart})
 
 def add_product(request, product_id):

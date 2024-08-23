@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div id="main">
+    <div class="container">
+<h1>Подборки</h1>
+
+    <ul class="collection-items">
+        
+            {% for liked in favourites  %}
+                    <li class="item">
+                <a href="{% url 'movie:movie_detail' liked.slug %}">
+                    <img src="{{liked.cover.url}}" loading="lazy" alt="Рекомендуемые к просмотру" width="360" height="180" title="Рекомендуемые к просмотру">
+                </a>
+
+                <div class="title">
+                    <a href="{% url 'movie:movie_detail' liked.slug %}" alt="Рекомендуемые к просмотру" title="Рекомендуемые к просмотру">{{liked.title}}</a>
+                </div>
+            </li>
+            {% endfor %}
+
+        
+            <li class="spacer">
+            </li>
+            
+            <li class="spacer">
+            </li>
+            
+            <li class="spacer">
+            </li>
+                </ul>
+
+    </div>
+</div>
+{% endblock content %}
