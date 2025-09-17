@@ -57,6 +57,18 @@ class Product(models.Model):
             return price - (price * discount / 100)
         else:
             return price
+    
+    
+    def get_avg_rating(self):
+        ratings = self.ratings.all()
+        if ratings:
+            value = sum([item.value for item in ratings]) / len(ratings)
+            if value:
+                return value
+            else:
+                return 0
+        else:
+            return 0
 
 class Rating(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="product_ratings")

@@ -28,3 +28,4 @@ class ProductAdmin(admin.ModelAdmin):
 class RatingAdmin(admin.ModelAdmin):
     list_display = ('product', 'rating', 'value', 'name')
     list_filter = ('product', 'rating')
+
